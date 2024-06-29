@@ -1,0 +1,153 @@
+{
+  "name": "app-one",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app-one",
+  "sourceRoot": "app-one/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/app-one",
+        "index": "app-one/src/index.html",
+        "browser": "app-one/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
+        "tsConfig": "app-one/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "app-one/src/assets",
+          {
+            "glob": "**/*",
+            "input": "lib-common/src/assets",
+            "output": "assets"
+          },
+          {
+            "glob": "**/*",
+            "input": "app-one/src/.well-known",
+            "output": ".well-known"
+          }
+        ],
+        "styles": [
+          "app-one/src/styles.scss",
+          "app-one/src/theme/variables.scss"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "2mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "port": 4201
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "app-one:build:production"
+        },
+        "development": {
+          "buildTarget": "app-one:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "app-one:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "app-one/jest.config.ts"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "app-one:build",
+        "staticFilePath": "dist/app-one/browser"
+      }
+    },
+    "capacitor": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "app-one"
+      },
+      "configurations": {
+        "add-ios": {
+          "command": "npx cap add ios"
+        },
+        "add-android": {
+          "command": "npx cap add android"
+        },
+        "sync-ios": {
+          "command": "npx cap sync ios"
+        },
+        "sync-android": {
+          "command": "npx cap sync android"
+        },
+        "open-ios": {
+          "command": "npx cap open ios"
+        },
+        "open-android": {
+          "command": "npx cap open android"
+        }
+      }
+    },
+    "deploy": {
+      "executor": "@angular/fire:deploy",
+      "options": {
+        "version": 2
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "app-one:build:production",
+          "serveTarget": "app-one:serve:production"
+        },
+        "development": {
+          "buildTarget": "app-one:build:development",
+          "serveTarget": "app-one:serve:development"
+        }
+      },
+      "defaultConfiguration": "production"
+    }
+  }
+}

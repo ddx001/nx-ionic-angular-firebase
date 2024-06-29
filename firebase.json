@@ -1,0 +1,15 @@
+{
+  "hosting": [
+    {
+      "target": "app-one",
+      "public": "dist/app-one/browser",
+      "frameworksBackend": {},
+      "rewrites": [
+        {
+          "source": "!/@(assets)/**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

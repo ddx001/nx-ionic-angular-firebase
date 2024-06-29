@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "app-one": {
+      "hosting": {
+        "app-one": [
+          "app-one"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "app-one"
+  }
+}
